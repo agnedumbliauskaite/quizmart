@@ -1,4 +1,4 @@
-exports.config = {
+export const config: WebdriverIO.Config = {
     //
     // ====================
     // Runner Configuration
@@ -21,7 +21,7 @@ exports.config = {
     // will be called from there.
     //
     specs: [
-        './test/specs/**/*.js'
+        './test/specs/**/*.ts'
     ],
     // Patterns to exclude.
     exclude: [
