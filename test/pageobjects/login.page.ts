@@ -1,6 +1,6 @@
+import { ChainablePromiseElement } from 'webdriverio';
 
-
-const Page = require('./page');
+import Page from './page';
 
 /**
  * sub page containing specific selectors and methods for a specific page
@@ -9,15 +9,15 @@ class LoginPage extends Page {
     /**
      * define selectors using getter methods
      */
-    get inputUsername() {
+    public get inputUsername(): ChainablePromiseElement<Promise<WebdriverIO.Element>> {
         return $('#username');
     }
 
-    get inputPassword() {
+    public get inputPassword(): ChainablePromiseElement<Promise<WebdriverIO.Element>> {
         return $('#password');
     }
 
-    get btnSubmit() {
+    public get btnSubmit(): ChainablePromiseElement<Promise<WebdriverIO.Element>> {
         return $('button[type="submit"]');
     }
 
@@ -25,7 +25,7 @@ class LoginPage extends Page {
      * a method to encapsule automation code to interact with the page
      * e.g. to login using username and password
      */
-    async login (username, password) {
+    public async login (username: string, password: string): Promise<void> {
         await this.inputUsername.setValue(username);
         await this.inputPassword.setValue(password);
         await this.btnSubmit.click();
@@ -34,9 +34,9 @@ class LoginPage extends Page {
     /**
      * overwrite specific options to adapt it to page object
      */
-    open() {
+    public open(): Promise<string> {
         return super.open('login');
     }
 }
 
-module.exports = new LoginPage();
+export default new LoginPage();
