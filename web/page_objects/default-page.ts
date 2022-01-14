@@ -9,6 +9,9 @@ export async function getElementByLocator(locator: string) {
 export async function clickByLocator(locator: string): Promise<void> {
     await (await getElementByLocator(locator)).click()
 }
+export async function getElementTextByLocator(locator:string) :Promise<string>{
+    return (await getElementByLocator(locator)).getText()
+}
 
 export async function openLandingPage(): Promise<void> {
     await browser.url('')
