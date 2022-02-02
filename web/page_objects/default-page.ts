@@ -16,3 +16,6 @@ export async function getElementTextByLocator(locator:string) :Promise<string>{
 export async function openLandingPage(): Promise<void> {
     await browser.url('')
 }
+export async function appendTextByLocator(locator: string,text: string): Promise<void> {
+    await (await getElementByLocator(locator)).addValue(text)
+}
