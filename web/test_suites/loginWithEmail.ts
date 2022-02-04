@@ -4,18 +4,23 @@ import {expect} from 'chai'
 import * as discoverPage from "../page_objects/discover-page"
 import { FieldValidationMessage } from "../utils/validationMessages"
 
-const validEmail = ""
+const validEmail = "agne.dumbliauskaite+1@telesoftas.com"
 const validPass = "sauguspass"
 const invalidEmail = "agne"
-const invalidPass = "blah"
+const invalidPass = "blahblah"
+const shortPass = "blah"
 
-describe('Test for login with email', function () {
+describe('Tests for login with email', function () {
     this.timeout(0)
 
-    it('Clicks sign in with email button', async function () {
+    this.beforeEach (async function() {
         await defaultPage.openLandingPage()
         await loginPage.clickSignInWithEmailButton()
         await browser.pause(2000)
+    })
+
+    it('Clicks sign in with email button and sign in', async () => {
+       
         expect (await loginPage.getSignInHeaderText()).equals("Sign in")
         await loginPage.clickAndEnterEmailField(validEmail,validPass)
         await browser.pause(2000)
@@ -24,15 +29,30 @@ describe('Test for login with email', function () {
 
         
     })
-    it('Check invalid email flow', async function () {
-        await defaultPage.openLandingPage()
-        await loginPage.clickSignInWithEmailButton()
-        await browser.pause(2000)
+    it('Check invalid email validation', async () => {
+        
         expect (await loginPage.getSignInHeaderText()).equals("Sign in")
         await loginPage.clickAndEnterEmailField(invalidEmail,validPass)
         await browser.pause(2000)
-        expect(await loginPage.getEmailValidationText()).equals(FieldValidationMessage.NotValidEmail)
+        expect(await loginPage.getEmailValidationText()).equals(FieldValidationMessage.invalidEmail)
         await browser.pause(2000)
     })
 
+    it('Check incorrect password validation', async () =>  {
+        
+        expect (await loginPage.getSignInHeaderText()).equals("Sign in")
+        await loginPage.clickAndEnterEmailField(validEmail,invalidPass)
+        await browser.pause(2000)
+        expect(await loginPage.getFormValidationText()).equals(FieldValidationMessage.IncorrectEmailAndPasswordCombination)
+        await browser.pause(2000)
+    })
+
+    it('Check short password validation', async () => {
+        
+        expect (await loginPage.getSignInHeaderText()).equals("Sign in")
+        await loginPage.clickAndEnterEmailField(validEmail,shortPass)
+        await browser.pause(2000)
+        expect(await loginPage.getPassValidationText()).equals(FieldValidationMessage.TooShortPassword)
+        await browser.pause(2000)
+    })
 })
