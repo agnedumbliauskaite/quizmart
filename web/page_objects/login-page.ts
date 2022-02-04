@@ -8,6 +8,8 @@ const emailInput = '//form//input[@name="email"]'
 const passInput = '//input[@name="password"]'
 const signInBtn = '//button[text()="Sign in"]'
 const emailValidationMessage = '//div[./input[@name="email"]]//h3'
+const formValidationMessage = '(//form //h3)[1]'
+const passwordValidationMessage = '//div[./input[@name="password"]]//h3'
 
 export async function clickSignInWithEmailButton(): Promise<void> {
     await defaultPage.clickByLocator(signInEmailButton)
@@ -23,4 +25,10 @@ export async function clickAndEnterEmailField(email: string, pass: string): Prom
 }
 export async function getEmailValidationText(): Promise<string> {
     return await defaultPage.getElementTextByLocator(emailValidationMessage)
+}
+export async function getFormValidationText(): Promise<string> {
+    return await defaultPage.getElementTextByLocator(formValidationMessage)
+}
+export async function getPassValidationText(): Promise<string> {
+    return await defaultPage.getElementTextByLocator(passwordValidationMessage)
 }
